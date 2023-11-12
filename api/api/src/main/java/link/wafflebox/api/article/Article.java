@@ -1,6 +1,9 @@
 package link.wafflebox.api.article;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import link.wafflebox.api.author.Author;
+
+import java.time.OffsetDateTime;
 
 public class Article {
     private final Long id;
@@ -8,13 +11,16 @@ public class Article {
     private final String summary;
     private final String content;
     private final Author author;
+    @JsonProperty("created-at")
+    private final OffsetDateTime createdAt;
 
-    public Article(Long id, String title, String summary, String content, Author author) {
+    public Article(Long id, String title, String summary, String content, Author author, OffsetDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.summary = summary;
         this.content = content;
         this.author = author;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -37,6 +43,10 @@ public class Article {
         return author;
     }
 
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
@@ -45,6 +55,7 @@ public class Article {
                 ", summary='" + summary + '\'' +
                 ", content='" + content + '\'' +
                 ", author=" + author +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
