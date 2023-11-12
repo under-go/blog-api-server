@@ -11,7 +11,7 @@ public class Article {
     private final String summary;
     private final String content;
     private final Author author;
-    @JsonProperty("created-at")
+    @JsonProperty("createdAt")
     private final OffsetDateTime createdAt;
 
     public Article(Long id, String title, String summary, String content, Author author, OffsetDateTime createdAt) {
