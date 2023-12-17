@@ -1,11 +1,9 @@
 package link.wafflebox.api.user.repository;
 
-import link.wafflebox.api.user.entity.User;
+import link.wafflebox.api.user.repository.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 }

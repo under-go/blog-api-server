@@ -1,4 +1,4 @@
-package link.wafflebox.api.user.entity;
+package link.wafflebox.api.user.repository.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="user")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
@@ -20,7 +20,7 @@ public class User {
     private String nickname;
 
     @Builder
-    public User(String id, String nickname) {
+    public UserEntity(String id, String nickname) {
         this.id = id;
         this.nickname = nickname;
     }

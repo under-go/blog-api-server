@@ -2,9 +2,11 @@ package link.wafflebox.api.article.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import link.wafflebox.api.user.dto.User;
+import lombok.Getter;
 
 import java.time.OffsetDateTime;
 
+@Getter
 public class Article {
     private final Long id;
     private final String title;
@@ -22,30 +24,6 @@ public class Article {
         this.content = content;
         this.user = user;
         this.createdAt = createdAt;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public User getAuthor() {
-        return user;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
     }
 
     @Override
