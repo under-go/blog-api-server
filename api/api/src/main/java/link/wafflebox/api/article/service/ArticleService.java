@@ -1,20 +1,12 @@
 package link.wafflebox.api.article.service;
 
 import link.wafflebox.api.article.dto.Article;
-import link.wafflebox.api.article.repository.ArticleEntity;
 import link.wafflebox.api.article.repository.ArticleRepository;
-import link.wafflebox.api.user.dto.User;
-import lombok.AllArgsConstructor;
+import link.wafflebox.api.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -26,7 +18,7 @@ public class ArticleService {
         // dummy
         List<Article> articles = new ArrayList<>();
         articleRepository.findAll().forEach(e -> articles.add(
-                new Article(e.getId(), e.getTitle(), e.getSummary(), e.getContent(), new User(e.getAuthorId(), "test-id", "test-nn"), e.getCreatedAt())
+                new Article(e.getId(), e.getTitle(), e.getSummary(), e.getContent(), new UserDto(e.getAuthorId(), "test-id", "test-nn"), e.getCreatedAt())
                 )
         );
 
