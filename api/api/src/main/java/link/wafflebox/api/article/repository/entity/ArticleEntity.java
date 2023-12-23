@@ -1,4 +1,4 @@
-package link.wafflebox.api.article.repository;
+package link.wafflebox.api.article.repository.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
