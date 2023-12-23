@@ -1,9 +1,6 @@
 package link.wafflebox.api.user.repository.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
@@ -14,14 +11,17 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
-    
-    private String id;
-
+    @Column(name="userId", unique = true)
+    private String userId;
+    @Column(name="hashed_password")
+    private String hashedPassword;
+    @Column(name="nickname")
     private String nickname;
 
     @Builder
-    public UserEntity(String id, String nickname) {
-        this.id = id;
+    public UserEntity(String userId, String hashedPassword, String nickname) {
+        this.userId = userId;
+        this.hashedPassword = hashedPassword;
         this.nickname = nickname;
     }
 }
