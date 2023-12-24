@@ -2,7 +2,9 @@ package link.wafflebox.api.global.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultClaims;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +15,16 @@ import java.util.Map;
 @Component
 public class JwtUtilImpl implements JwtUtil {
 
-    private final JwtParser jwtParser;
-    private final String secretKey = "3nfA34FS3tGjlAjhfgn&MDFN#%$MFN2!3DgnfE#Nl-32kDNFml3nqXL0#"; // 임시 키
     private final long accessTokenValidity = 1000L*60*60*24;
 
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
+    @Value("${external.key.hmac-secret}")
+    private String secretKey;
+    private JwtParser jwtParser;
 
-    public JwtUtilImpl() {
+    @PostConstruct
+    public void init() {
         this.jwtParser = Jwts.parser().setSigningKey(secretKey);
     }
 
