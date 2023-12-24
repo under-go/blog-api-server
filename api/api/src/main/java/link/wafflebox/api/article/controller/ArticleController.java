@@ -1,6 +1,7 @@
 package link.wafflebox.api.article.controller;
 
 import link.wafflebox.api.article.controller.request.PostNewArticleRequest;
+import link.wafflebox.api.article.controller.response.PostNewArticleResponse;
 import link.wafflebox.api.article.service.ArticleService;
 import link.wafflebox.api.article.dto.Article;
 import link.wafflebox.api.global.dto.ApiResponse;
@@ -64,6 +65,6 @@ public class ArticleController {
 
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.ok(result.getData()));
+                .body(ApiResponse.ok(new PostNewArticleResponse(result.getData())));
     }
 }
