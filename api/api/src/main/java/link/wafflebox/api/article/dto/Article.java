@@ -33,7 +33,7 @@ public class Article {
                 ", title='" + title + '\'' +
                 ", summary='" + summary + '\'' +
                 ", content='" + content + '\'' +
-                ", author=" + userDto +
+                ", authorNo=" + userDto +
                 ", createdAt=" + createdAt +
                 '}';
     }

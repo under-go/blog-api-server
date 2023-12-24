@@ -38,6 +38,15 @@ public class UserService {
         return Result.success(users);
     }
 
+    public Result<UserDto> findUser(String userId) {
+        try {
+            UserDto user = UserDto.fromEntity(userRepository.findByUserId(userId));
+            return Result.success(user);
+        } catch (Exception e) {
+            return Result.fail(new Error(HttpStatus.INTERNAL_SERVER_ERROR, "유저 정보를 불러올 수 없습니다."));
+        }
+    }
+
     public Result<Long> signUp(String id, String password, String nickname) {
         try {
             UserEntity savedEntity = userRepository.saveAndFlush(new UserEntity(id, encrypt(password), nickname, Role.USER));
