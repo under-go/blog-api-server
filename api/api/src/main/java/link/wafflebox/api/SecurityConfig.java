@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/api/v1/user/register")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/v1/user/login")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/v1/user/all")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/api/v1/article/new")).hasRole("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/api/v1/article/all")).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((sessionManagement) -> sessionManagement
