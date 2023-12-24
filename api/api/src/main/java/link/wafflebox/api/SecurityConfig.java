@@ -1,6 +1,6 @@
 package link.wafflebox.api;
 
-import link.wafflebox.api.filter.JwtAuthorizationFilter;
+import link.wafflebox.api.user.filter.JwtAuthorizationFilter;
 import link.wafflebox.api.user.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -41,9 +41,11 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf
                         .ignoringRequestMatchers(new AntPathRequestMatcher("/**")))
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/api/v1/user/signup")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/v1/user/register")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/v1/user/login")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/api/v1/articles")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/v1/user/all")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/api/v1/article/new")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/api/v1/article/all")).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((sessionManagement) -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

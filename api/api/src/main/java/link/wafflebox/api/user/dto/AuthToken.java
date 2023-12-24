@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class AuthToken {
     private final String accessToken;
-    private final String refreshToken;
+//    private final String refreshToken;
 }

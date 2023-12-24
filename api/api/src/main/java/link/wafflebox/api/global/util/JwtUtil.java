@@ -11,5 +11,4 @@ public interface JwtUtil {
     Map<String, Object> resolveClaims(HttpServletRequest request);
     String resolveToken(HttpServletRequest request);
     boolean validateClaims(Map<String, Object> claims);
-    String getSubject(Map<String, Object> claims);
 }

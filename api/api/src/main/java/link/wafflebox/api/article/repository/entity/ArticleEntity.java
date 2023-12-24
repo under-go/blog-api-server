@@ -1,4 +1,4 @@
-package link.wafflebox.api.article.repository;
+package link.wafflebox.api.article.repository.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
@@ -16,26 +16,17 @@ public class ArticleEntity {
     private String title;
     private String summary;
     private String content;
-    @Column(name="author_id")
-    private Long authorId;
+    @Column(name="author_no")
+    private Long authorNo;
     @Column(name="created_at")
     private OffsetDateTime createdAt;
 
     @Builder
-
-    public ArticleEntity(String title, String summary, String content, Long authorId, OffsetDateTime createdAt) {
+    public ArticleEntity(String title, String summary, String content, Long authorNo, OffsetDateTime createdAt) {
         this.title = title;
         this.summary = summary;
         this.content = content;
-        this.authorId = authorId;
+        this.authorNo = authorNo;
         this.createdAt = createdAt;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 }

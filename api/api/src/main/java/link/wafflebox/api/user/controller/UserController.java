@@ -1,12 +1,18 @@
 package link.wafflebox.api.user.controller;
 
 import link.wafflebox.api.global.dto.ApiResponse;
+import link.wafflebox.api.global.dto.Error;
+import link.wafflebox.api.global.dto.Result;
 import link.wafflebox.api.global.util.JwtUtil;
 import link.wafflebox.api.user.controller.request.LoginRequest;
+import link.wafflebox.api.user.controller.request.RegisterRequest;
 import link.wafflebox.api.user.dto.AuthToken;
 import link.wafflebox.api.user.dto.UserDto;
 import link.wafflebox.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,23 +32,49 @@ public class UserController {
 
     @GetMapping("/all")
     @ResponseBody
-    public List<UserDto> getUsers() {
-        return userService.findAllUsers();
+    public ResponseEntity<ApiResponse> getUsers() {
+        Result<List<UserDto>> result = userService.findAllUsers();
+
+        if (result.isSuccessful()) {
+            return ResponseEntity
+                    .ok()
+                    .body(ApiResponse.ok(result.getData()));
+        }
+
+        return ResponseEntity
+                .status(result.getError().getHttpStatusCode())
+                .body(ApiResponse.fromError(result.getError()));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     @ResponseBody
-    public Map<String, Long> signUp(@RequestBody Map<String, String> params) {
-        Long userNo = userService.signUp(params.get("id"), params.get("password"), params.get("nickname"));
-        Map<String, Long> result = new HashMap<>();
-        result.put("no", userNo);
-        return result;
+    public ResponseEntity<ApiResponse> register(@RequestBody RegisterRequest request) {
+        Result<Long> result = userService.signUp(request.getId(), request.getPassword(), request.getNickname());
+
+        if (result.isSuccessful()) {
+            return ResponseEntity
+                    .ok()
+                    .body(ApiResponse.ok(result.getData()));
+        }
+
+        return ResponseEntity
+                .status(result.getError().getHttpStatusCode())
+                .body(ApiResponse.fromError(result.getError()));
     }
 
     @PostMapping("/login")
     @ResponseBody
-    public AuthToken login(@RequestBody LoginRequest request) {
-        Optional<AuthToken> result = userService.signIn(request.getId(), request.getPassword());
-        return result.orElse(null);
+    public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest request) {
+        Result<AuthToken> result = userService.signIn(request.getId(), request.getPassword());
+
+        if (result.isSuccessful()) {
+            return ResponseEntity
+                    .ok()
+                    .body(ApiResponse.ok(result.getData()));
+        }
+
+        return ResponseEntity
+                .status(result.getError().getHttpStatusCode())
+                .body(ApiResponse.fromError(result.getError()));
     }
 }

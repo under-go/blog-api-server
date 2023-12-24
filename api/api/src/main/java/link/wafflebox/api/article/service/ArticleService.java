@@ -2,10 +2,18 @@ package link.wafflebox.api.article.service;
 
 import link.wafflebox.api.article.dto.Article;
 import link.wafflebox.api.article.repository.ArticleRepository;
+import link.wafflebox.api.article.repository.entity.ArticleEntity;
+import link.wafflebox.api.global.dto.Error;
+import link.wafflebox.api.global.dto.Result;
 import link.wafflebox.api.user.dto.UserDto;
+import link.wafflebox.api.user.repository.entity.Role;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +21,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    public List<Article> getArticles() {
+    public Result<List<Article>> getArticles() {
         // dummy
         List<Article> articles = new ArrayList<>();
         articleRepository.findAll().forEach(e -> articles.add(
-                new Article(e.getId(), e.getTitle(), e.getSummary(), e.getContent(), new UserDto(e.getAuthorId(), "test-id", "test-nn"), e.getCreatedAt())
+                new Article(e.getId(), e.getTitle(), e.getSummary(), e.getContent(), new UserDto(e.getAuthorNo(), "test-id", "test-nn", Role.USER), e.getCreatedAt())
                 )
         );
 
-        return articles;
+        return Result.success(articles);
+    }
+
+    public Result<Long> createArticle(String title, String summary, String content, Long authorNo) {
+        try {
+            ArticleEntity savedEntity = articleRepository.saveAndFlush(new ArticleEntity(title, summary, content, authorNo, OffsetDateTime.now()));
+            return Result.success(savedEntity.getId());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return Result.fail(new Error(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 오류로 인해 글을 저장할 수 없습니다."));
+        }
     }
 }
 
