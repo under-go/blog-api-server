@@ -15,7 +15,7 @@ public class JwtUtilImpl implements JwtUtil {
 
     private final JwtParser jwtParser;
     private final String secretKey = "3nfA34FS3tGjlAjhfgn&MDFN#%$MFN2!3DgnfE#Nl-32kDNFml3nqXL0#"; // 임시 키
-    private long accessTokenValidity = 1000*60*30;
+    private final long accessTokenValidity = 1000L*60*60*24;
 
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
@@ -75,10 +75,5 @@ public class JwtUtilImpl implements JwtUtil {
     public boolean validateClaims(Map<String, Object> claims) throws AuthenticationException {
         DefaultClaims defaultClaims = new DefaultClaims(claims);
         return defaultClaims.getExpiration().after(new Date());
-    }
-
-    public String getSubject(Map<String, Object> claims) {
-        DefaultClaims defaultClaims = new DefaultClaims(claims);
-        return defaultClaims.getSubject();
     }
 }

@@ -2,7 +2,11 @@ package link.wafflebox.api.article.controller;
 
 import link.wafflebox.api.article.service.ArticleService;
 import link.wafflebox.api.article.dto.Article;
+import link.wafflebox.api.global.dto.ApiResponse;
+import link.wafflebox.api.global.dto.Result;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +21,19 @@ import java.util.List;
 public class ArticleController {
     private final ArticleService articleService;
 
-    @GetMapping("articles")
+    @GetMapping("/article/all")
     @ResponseBody
-    public List<Article> getArticles(Model model) {
-        List<Article> result = articleService.getArticles();
-        return result;
+    public ResponseEntity<ApiResponse> getArticles(Model model) {
+        Result<List<Article>> result = articleService.getArticles();
+
+        if (result.isSuccessful()) {
+            return ResponseEntity
+                    .ok()
+                    .body(ApiResponse.ok(result.getData()));
+        }
+
+        return ResponseEntity
+                .status(result.getError().getHttpStatusCode())
+                .body(ApiResponse.fromError(result.getError()));
     }
 }

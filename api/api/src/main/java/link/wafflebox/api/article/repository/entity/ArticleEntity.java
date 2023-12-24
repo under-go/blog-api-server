@@ -22,20 +22,11 @@ public class ArticleEntity {
     private OffsetDateTime createdAt;
 
     @Builder
-
     public ArticleEntity(String title, String summary, String content, Long authorId, OffsetDateTime createdAt) {
         this.title = title;
         this.summary = summary;
         this.content = content;
         this.authorId = authorId;
         this.createdAt = createdAt;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 }

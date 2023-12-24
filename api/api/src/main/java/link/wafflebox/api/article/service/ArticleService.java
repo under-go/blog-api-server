@@ -2,7 +2,9 @@ package link.wafflebox.api.article.service;
 
 import link.wafflebox.api.article.dto.Article;
 import link.wafflebox.api.article.repository.ArticleRepository;
+import link.wafflebox.api.global.dto.Result;
 import link.wafflebox.api.user.dto.UserDto;
+import link.wafflebox.api.user.repository.entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +16,15 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public List<Article> getArticles() {
+    public Result<List<Article>> getArticles() {
         // dummy
         List<Article> articles = new ArrayList<>();
         articleRepository.findAll().forEach(e -> articles.add(
-                new Article(e.getId(), e.getTitle(), e.getSummary(), e.getContent(), new UserDto(e.getAuthorId(), "test-id", "test-nn"), e.getCreatedAt())
+                new Article(e.getId(), e.getTitle(), e.getSummary(), e.getContent(), new UserDto(e.getAuthorId(), "test-id", "test-nn", Role.USER), e.getCreatedAt())
                 )
         );
 
-        return articles;
+        return Result.success(articles);
     }
 }
 
